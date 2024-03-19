@@ -4,7 +4,7 @@
       <!-- <div></div> -->
       <!-- <div style="flex: 1;">
       </div> -->
-      <aside class="right-bar">
+      <aside class="right-bar" :class="{ 'open': isDrawerOpen }">
         <section class="plus-icon">
           <img src="../assets/icons/puls_icon.svg" />
         </section>
@@ -12,7 +12,7 @@
           <div class="middle-right-icon">
             <img src="../assets//icons/mobius_ai.svg" />
             <img src="../assets/icons/contructs.svg" />
-            <img src="../assets//icons/market_place_management.svg" alt="Marketplace" @click="marketplacemanagement" />
+            <img src="../assets//icons/market_place_management.svg" alt="Marketplace" @click="toggleDrawer" />
             <img src="../assets/icons/log_history.svg" />
             <img src="../assets/icons/collaborate.svg" />
             <img src="../assets/icons/notifications.svg" />
@@ -23,6 +23,9 @@
         </section>
       </aside>
     </section>
+    <section class="drawer" :class="{ 'open': isDrawerOpen }">
+      <!-- Drawer content -->
+    </section>
   </div>
 </template>
 
@@ -30,18 +33,19 @@
 export default {
   data() {
     return {
-      isClicked: false,
+      isDrawerOpen: false,
     };
   },
   methods: {
-    marketplacemanagement() {
-      this.isClicked = true;
-      if (this.$router) {
-        this.$router.push({ name: 'Productmanagement' });
-      } else {
-        console.error("Vue Router is not properly initialized.");
-      }
+    toggleDrawer() {
+      this.isDrawerOpen = !this.isDrawerOpen;
+      this.$emit('toggle-drawer');
     }
+    // if (this.$router) {
+    //   this.$router.push({ name: 'Productmanagement' });
+    // } else {
+    //   console.error("Vue Router is not properly initialized.");
+    // }
   }
 }
 
@@ -57,11 +61,6 @@ export default {
   display: flex;
   align-items: stretch;
   z-index: 999;
-  transition: left 0.3s ease;
-}
-
-.hidden {
-  opacity: 0;
 }
 
 .right-bar {
@@ -72,20 +71,16 @@ export default {
   border-right: 1px solid #dde5e9;
   background: #fff;
   height: 100%;
-  width: 48px;
+  width: 50px;
   position: fixed;
   top: 0;
-  right: 0;
+  right: 0px;
   z-index: 1;
+  transition: right 0.3s ease;
 }
 
 .middle-icons {
   width: 100%;
-  /* display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 24px; */
   margin-top: auto;
 
 }
@@ -106,7 +101,6 @@ export default {
   align-items: center;
   display: inline-flex;
   justify-content: center;
-  /* gap: 4px; */
   width: 100%;
 }
 
@@ -119,6 +113,19 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  /* background: rgba(0, 0, 0, 0.5); */
+  z-index: 2;
+  transition: right 0.3s ease;
+}
+
+.open {
+  right: 700px;
+}
 </style>
-
-

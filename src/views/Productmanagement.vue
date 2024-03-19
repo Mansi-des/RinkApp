@@ -1,8 +1,8 @@
 <template>
-    <section class="right-drawer">
-        <!-- <aside class="right-side-bar">
-                <Rightsidebar />
-            </aside> -->
+    <aside>
+        <Rightsidebar @toggle-drawer="toggleDrawer" />
+    </aside>
+    <section class="right-drawer" :class="{ 'closed': !isDrawerOpen }">
         <div class="form-header">
             <div class="marketpalce-header">
                 <span class="marketplace-management">Marketplace Management</span>
@@ -126,8 +126,6 @@
                     <div class="flex-container">
                         <textarea class="text-area" required></textarea>
                     </div>
-                    <!-- <div v-if="showError && isInvalid" class="error-message">Description is required</div> -->
-                    <!-- </div> -->
                 </div>
                 <div class="input-box">
                     <span class="input-title">Tags</span>
@@ -153,25 +151,14 @@
 </template>
 
 <script>
-// import Rightsidebar from "../components/Rightsidebar.vue"
+import Rightsidebar from "../components/Rightsidebar.vue"
 import Marketplace from "./Marketplacemanagement.vue"
-
-// window.addEventListener('wheel', function(event) {
-//         event.preventDefault();
-//     }, { passive: false });
 
 export default {
     components: {
         Marketplace,
-        // Rightsidebar
+        Rightsidebar
     },
-    // name: "AppMarketplaceTreeStructure",
-    // props: {
-    //     items: {
-    //         type: Array,
-    //         default: () => []
-    //     }
-    // },
     data() {
         return {
             activeTab: 'tab1',
@@ -195,7 +182,8 @@ export default {
             groupConnectedConstructs: false,
             productDefinition: false,
             productData: false,
-            imageSizeString: ''
+            imageSizeString: '',
+            isDrawerOpen: false
 
         }
     },
@@ -216,8 +204,10 @@ export default {
         },
     },
     methods: {
+        toggleDrawer() {
+            this.isDrawerOpen = !this.isDrawerOpen;
+        },
         triggerFileInput() {
-            // Trigger the file input click event
             document.getElementById('fileInput').click();
         },
         onFileChange(event) {
@@ -239,14 +229,6 @@ export default {
                 console.log("File size:", sizeString);
                 this.imageSizeString = `${fileType} image - ${sizeString}`
 
-                // Read file and set as image source
-                // const reader = new FileReader();
-                // reader.onload = () => {
-                //     this.imageUrl = reader.result;
-                // };
-                // reader.readAsDataURL(file);
-
-                // Continue with your logic
                 this.imageUrl = URL.createObjectURL(file);
                 this.fileName = file.name;
                 this.isImage = true;
@@ -303,16 +285,24 @@ export default {
     top: 0;
     right: 0;
     bottom: 0;
-    width: 650px;
+    width: 700px;
     height: 100%;
     border: 1px solid #eaeaea;
     background: #fff;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    /* box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); */
     transition: transform 0.3s ease;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.right-drawer button,
+.right-drawer input,
+.right-drawer label {
+    cursor: pointer;
 }
 
 .right-drawer.closed {
-    transform: translateX(100%);
+    width: 0;
 }
 
 .form-header {
@@ -597,7 +587,6 @@ input[type="checkbox"]:checked+.checkbox-label:before {
 .image {
     width: 100%;
     height: 100%;
-    /* background-color: #f9f9f9; */
     border-right: 2px solid #0387d3;
     position: relative;
     display: flex;
@@ -616,13 +605,11 @@ input[type="checkbox"]:checked+.checkbox-label:before {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 12px;
     cursor: pointer;
-    /* padding: 36px; */
 }
 
 .selected-img {
     display: none;
     position: relative;
-    /* Hide the default file input */
 }
 
 .selected-img+img {
@@ -750,7 +737,6 @@ input[type="checkbox"]:checked+.checkbox-label:before {
     color: #fff;
     display: inline-flex;
     align-items: center;
-    /* overflow-wrap: break-word !important; */
 }
 
 .select-tag img {
@@ -791,7 +777,6 @@ input[type="checkbox"]:checked+.checkbox-label:before {
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
-    /* flex: 1; */
     flex-shrink: 0;
     overflow-y: auto;
     overflow-x: hidden;

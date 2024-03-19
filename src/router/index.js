@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Rightsidebar from '../components/Rightsidebar.vue';
+import Marketplace from '../views/Productmanagement.vue';
 const routes = [
   {
     path: '/',
-    redirect: '/Rightsidebar.vue'
+    redirect: '/marketplace.vue'
   },
   {
-    path: '/Rightsidebar.vue',
-    component: Rightsidebar
+    path: '/marketplace.vue',
+    component: Marketplace
   },
   {
     path: '/marketplace',

@@ -6,10 +6,6 @@
                     :class="{ 'p-tree-container': shouldRenderChildren, 'full-width': node.name === 'Mobius Dtaas' }">
                     <li @click="toggle" class="p-treenode" :class="{ 'child-node-empty': !hasChildrenComputed }">
                         <div role="treeitem" class="p-treenode-content">
-                            <!-- <button type="button" pripple tabindex="-1" class="p-ripple">
-                                <span class="p-tree-toggler-icon">
-                                </span>
-                            </button> -->
                             <div class="tree-node">
                                 <div class="node-content">
                                     <div class="mobius-icon-content">
